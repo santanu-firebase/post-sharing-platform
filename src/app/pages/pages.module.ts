@@ -9,6 +9,7 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { HighlightSearch } from '../pipe/highlight.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardComponent, PostAddUpdateDialog } from './dashboard/dashboard.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DashboardComponent, PostAddUpdateDialog } from './dashboard/dashboard.c
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    SharedModule
   ]
 })
 export class PagesModule { }
