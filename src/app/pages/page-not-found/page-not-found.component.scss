@@ -1,0 +1,29 @@
+.errorbody {
+    display: flex;
+    padding: 50px 0;
+  
+    .twopanel {
+      display: flex;
+      // justify-content: space-between;
+  
+      .contentprt {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+  
+        img {
+          width: 60%;
+        }
+  
+        p {
+          font-size: 20px;
+        }
+      }
+  
+      .rightimgprt {
+        width: 25%;
+      }
+    }
+  }
+  

@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 m-5 text-center">
+        <h1 class="fs-1 fw-bold">Dashboard</h1>
+      </div>
+      <div class="d-flex">
+        <mat-form-field class="col-md-4" appearance="standard">
+          <mat-label>Search Post Title</mat-label>
+          <input matInput (keyup)="applyFilter($event?.target?.value)" type="search" placeholder="Search Post Title">
+        </mat-form-field>
+        <div class="col-md-8">
+          <button class="float-end" mat-raised-button color="primary" (click)="openDialog()">Create a Post</button>
+        </div>
+      </div>
+  
+  
+      <ng-container *ngFor="let post of entryList | paginate: { itemsPerPage: 15,
+        currentPage: pageNo,
+        totalItems: entryList?.length }">
+        <div class="col-md-3 mb-1">
+  
+          <mat-card class="example-card min-height">
+            <mat-card-header>
+              <mat-card-title (click)="redirectToDetailsPage(post?.key)"
+                [innerHTML]="post?.data?.title | highlight: filterValue" class="fs-8 cursor-pointer"></mat-card-title>
+              <a class="cursor-pointer" *ngIf="post?.data?.uid === this.storageService.getUser()?.accessToken"
+                (click)="openDialog(post)">
+                <mat-icon>edit</mat-icon>
+              </a>
+            </mat-card-header>
+            <img mat-card-image (click)="redirectToDetailsPage(post?.key)" [src]="post?.data?.thumbnail" class="max-width-height-pic cursor-pointer">
+            <mat-card-content>
+              <p class="text-truncate">{{post?.data?.content}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button class="pe-none">By {{post?.data?.displayName}}</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+  
+      </ng-container>
+      <mat-card *ngIf="entryList?.length === 0">
+        No Post found.
+      </mat-card>
+      <pagination-controls *ngIf="entryList?.length > 15" class="text-center m-4" (pageChange)="pageNo = $event">
+      </pagination-controls>
+    </div>
+  </div>

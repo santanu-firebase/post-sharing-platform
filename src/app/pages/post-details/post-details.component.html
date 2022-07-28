@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-12 m-5 text-center">
+      <h1 class="fs-1 fw-bold">Post Details</h1>
+    </div>
+    <div class="col-md-12 mb-5">
+      <div class="row">
+        <ng-container *ngIf="postDetails">
+          <div class="col-md-12 d-flex">
+            <div class="col-md-9">
+              <img [src]="postDetails?.thumbnail" class="w-50 z-depth-2 mb-2">
+            </div>
+            <h5 class="col-md-3">Created Date: {{postDetails?.createdAt | date: 'fullDate'}} </h5>
+          </div>
+          <div class="col-md-12">
+            <h1>{{postDetails?.title}}</h1>
+          </div>
+          <div class="col-md-12 d-flex">
+            <div class="col-md-1">
+              <h4>Privacy Type:</h4>
+            </div>
+            <div class="col-md-8">
+              <h4><strong>{{postDetails?.privacy}}</strong></h4>
+            </div>
+          </div>
+          <div class="col-md-12 wrap">
+            <blockquote class="blockquote">
+              <h3 [innerHTML]="postDetails?.content"></h3>
+              <footer class="blockquote-footer">Author {{postDetails?.displayName}}</footer>
+            </blockquote>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>

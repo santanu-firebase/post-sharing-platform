@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  .max-width-pic {
+      max-width: 200px;
+  }
+
+  .wrap {
+    white-space: pre-wrap
+  }
+
+  .example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .max-width-height-pic {
+    max-height: 260px !important;
+    max-width: 260px !important;
+  }
+
+  .min-height {
+    min-height: 500px;
+  }

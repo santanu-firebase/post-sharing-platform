@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>Create a post</h1>
+<mat-dialog-content>
+  <form [formGroup]="createPostForm" class="p-4 bg-white shadow">
+    <div class="row form-group">
+      <mat-form-field appearance="outline" class="col-md-12 mb-3 mb-md-1">
+        <mat-label>Post Title</mat-label>
+        <input formControlName="title" matInput>
+        <mat-error *ngIf="createPostForm.controls.title.hasError('required')">Post Title is required.</mat-error>
+        <mat-error *ngIf="createPostForm.controls.title.hasError('minlength')">Post Title should be minimun of 5
+          character.</mat-error>
+        <mat-error *ngIf="createPostForm.controls.title.hasError('maxlength')">Post Title should be maximum of 80
+          character.</mat-error>
+      </mat-form-field>
+
+      <div class="col-md-12 mb-2" *ngIf="!data.element">
+        <mat-label *ngIf="!createPostForm?.value?.thumbnail">Upload Thumbnail Image: </mat-label>
+        <img *ngIf="createPostForm?.value?.thumbnail" [src]="createPostForm?.value?.thumbnail"
+          class="max-width-pic z-depth-2">
+        <button mat-button (click)="fileUpload.click()">Upload Thumbnail</button>
+        <input type="file" class="d-none" (change)="uploadFile($event)" #fileUpload accept="image/jpeg">
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-2" *ngIf="data.element">
+      <img *ngIf="createPostForm?.value?.thumbnail" [src]="createPostForm?.value?.thumbnail"
+        class="max-width-pic z-depth-2">
+    </div>
+
+    <div class="row form-group">
+      <mat-form-field appearance="outline" class="col-md-12 mb-3 mb-md-1">
+        <mat-label>Content</mat-label>
+        <textarea matInput rows="6" cols="50" formControlName="content"></textarea>
+        <mat-error *ngIf="createPostForm.controls.content.hasError('required')">Content is required.</mat-error>
+        <mat-error *ngIf="createPostForm.controls.content.hasError('minlength')">Content should be minimun of 100
+          character.</mat-error>
+        <mat-error *ngIf="createPostForm.controls.content.hasError('maxlength')">Content should be maximum of 500
+          character.</mat-error>
+      </mat-form-field>
+
+      <mat-radio-group aria-label="Privacy" formControlName="privacy" class="col-md-12 mb-3 mb-md-1">
+        <mat-radio-button value="Public">Public</mat-radio-button>
+        <mat-radio-button value="Private">Private</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button (click)="submitForm()" color="primary" cdkFocusInitial>{{this.data.element ? 'Update' :
+    'Submit'}}</button>
+</mat-dialog-actions>
+
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

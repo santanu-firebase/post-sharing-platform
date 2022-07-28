@@ -1,0 +1,42 @@
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-12 m-5 text-center">
+        <h1 class="fs-1 fw-bold">LOGIN</h1>
+        </div>
+      <div class="col-md-6 mb-5">
+        <form [formGroup]="loginForm" class="p-5 bg-white shadow">
+
+          <div class="row form-group">
+            <mat-form-field appearance="outline" class="col-md-12">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+              <mat-error *ngIf="loginForm.controls.email.hasError('required')">Email is required.</mat-error>
+              <mat-error *ngIf="loginForm.controls.email.hasError('pattern')">Email is invalid.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row form-group">
+            <mat-form-field appearance="outline" class="col-md-12">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" [type]="inputType">
+              <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
+                <mat-icon *ngIf="visible">visibility</mat-icon>
+                <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.controls.password.hasError('required')">Password is required.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-12">
+              <button mat-raised-button color="primary" (click)="loginUser()">Sign In</button>
+              <div class="d-flex mt-2">
+                <p>Need an account?</p><a class="ms-2" [routerLink]="['/register']">SIGN UP</a>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
