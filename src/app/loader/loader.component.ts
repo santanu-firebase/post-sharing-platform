@@ -22,7 +22,7 @@ export class LoaderComponent implements OnInit {
   constructor(
     private firebaseService: FirebaseService
   ) {
-    this.isLoading = this.firebaseService.isHttpRequest;    
+    this.isLoading = this.firebaseService.isHttpRequest;
   }
 
   ngOnInit() {

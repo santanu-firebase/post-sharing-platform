@@ -29,9 +29,10 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  applyFilter(filterValue: string) {    
+  applyFilter(filterValue: string) {
+    this.pageNo = 1;
     this.filterValue = filterValue.trim().toLowerCase(); // Remove whitespace and Datasource defaults to lowercase matches
-    if(filterValue.length > 0) {
+    if (filterValue.length > 0) {
       this.entryList = this.duplicateEntryList.filter(x => (x.data.title).toLowerCase().includes(this.filterValue));
     } else {
       this.entryList = this.duplicateEntryList;
@@ -42,7 +43,7 @@ export class DashboardComponent implements OnInit {
     this.firebaseService.getPostList().subscribe((res) => {
       if (res) {
         this.entryList = res;
-        this.duplicateEntryList =  res;
+        this.duplicateEntryList = res;
       }
     });
   }
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  redirectToDetailsPage(key) {    
+  redirectToDetailsPage(key) {
     this.router.navigate(['/user', 'post-details', this.storageService.encription(key)]);
   }
 }
@@ -68,17 +69,20 @@ export class DashboardComponent implements OnInit {
 export class PostAddUpdateDialog {
   createPostForm: FormGroup;
   thumbnailImageFile: File;
+  isLoading: any;
+  isDisable: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<PostAddUpdateDialog>,
     private firebaseService: FirebaseService,
     public storageService: StorageService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {      
-      this.formInit();
-      if(this.data.element) {        
-        this.createPostForm.patchValue(this.data.element.data);
-      }
-     }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.formInit();
+    if (this.data.element) {
+      this.createPostForm.patchValue(this.data.element.data);
+    }
+  }
+
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -98,46 +102,54 @@ export class PostAddUpdateDialog {
   }
 
   submitForm() {
-    if(this.createPostForm.valid) {
-      if(this.data.element) {
-      this.createPostForm.value.updatedAt = new Date() + '';
+    if (this.createPostForm.valid) {
+      if (this.data.element) {
+        this.isDisable = true;
+        this.createPostForm.value.updatedAt = new Date() + '';
         this.firebaseService.updateEntry(this.data.element.key, this.createPostForm.value).then((response: any) => {
           this.dialogRef.close(this.createPostForm.value);
           this.firebaseService.alert('Post has been updated successfully', 'success');
+        }, err => {
+          this.isDisable = false;
         });
       } else {
-        if(this.thumbnailImageFile) {
+        this.isDisable = true;
+        if (this.thumbnailImageFile) {
           this.createPostForm.value.createdAt = new Date() + '';
           this.createPostForm.value.id = Math.random().toString(16).substring(2, 15);
-          this.firebaseService.uploadFileToFirebase(this.createPostForm.value.id, this.thumbnailImageFile).then((res)=>{
-            if(res) {
+          this.firebaseService.uploadFileToFirebase(this.createPostForm.value.id, this.thumbnailImageFile).then((res) => {
+            if (res) {
               this.createPostForm.controls.thumbnail.patchValue(res);
             }
-          }).then(()=>{
+          }, err => {
+            this.isDisable = false;
+          }).then(() => {
             this.firebaseService.addNewPost(this.createPostForm.value).then((response: any) => {
               this.dialogRef.close(this.createPostForm.value);
               this.firebaseService.alert('Post has been added successfully', 'success');
+            }, err => {
+              this.isDisable = false;
             });
           })
         } else {
           this.firebaseService.alert('Please upload Thumbnail Image', 'error');
         }
-       
+
       }
-      
+
     } else {
       this.createPostForm.markAllAsTouched();
     }
   }
 
-  uploadFile(event: any) {    
+  uploadFile(event: any) {
     if (event.target.files && event.target.files[0]) {
-      if(event.target.files[0].type === 'image/jpeg') {
-        if(event.target.files[0].size <= 10485760) {
+      if (event.target.files[0].type === 'image/jpeg') {
+        if (event.target.files[0].size <= 10485760) {
           this.thumbnailImageFile = event.target.files[0];
           var reader = new FileReader();
           reader.onload = (event: any) => {
-              this.createPostForm.controls.thumbnail.patchValue(event.target.result);
+            this.createPostForm.controls.thumbnail.patchValue(event.target.result);
           }
           reader.readAsDataURL(event.target.files[0]);
         } else {
