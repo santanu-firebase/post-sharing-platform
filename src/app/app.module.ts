@@ -11,6 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './interceptor/interceptor';
+import { LoaderModule } from './loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     MaterialModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    LoaderModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
