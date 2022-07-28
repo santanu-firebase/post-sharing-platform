@@ -1,4 +1,5 @@
-<h1 mat-dialog-title>Create a post</h1>
+<h1 mat-dialog-title>{{this.data.element ? 'Update a post' :
+  'Create a post'}}</h1>
 <mat-dialog-content>
   <form [formGroup]="createPostForm" class="p-4 bg-white shadow">
     <div class="row form-group">
@@ -47,11 +48,6 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button (click)="submitForm()" color="primary" cdkFocusInitial>{{this.data.element ? 'Update' :
+  <button mat-raised-button (click)="submitForm()" color="primary" [disabled]="isDisable" cdkFocusInitial>{{this.data.element ? 'Update' :
     'Submit'}}</button>
 </mat-dialog-actions>
-
-
-<!-- Copyright 2018 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->

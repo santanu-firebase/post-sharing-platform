@@ -27,7 +27,7 @@
             <mat-form-field appearance="outline" class="col-md-6">
               <mat-label>Date of birth</mat-label>
               <input matInput formControlName="dateOfBirth" [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
-              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-hint>Hint: MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error *ngIf="registrationForm.controls.dateOfBirth.hasError('required')">Date of birth is required.</mat-error>
@@ -45,7 +45,7 @@
             <mat-form-field appearance="outline" class="col-md-6 mb-5">
               <mat-label>Password</mat-label>
               <input matInput formControlName="password" [type]="inputType">
-              <mat-hint>Password should be Min(8), Max (16), 1 uppercase letter, 1 lowercase letter, 1 symbol and 2 numbers</mat-hint>
+              <mat-hint>Hint: Password should be Min(8), Max (16), 1 uppercase letter, 1 lowercase letter, 1 symbol and 2 numbers</mat-hint>
 
               <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
                 <mat-icon *ngIf="visible">visibility</mat-icon>
