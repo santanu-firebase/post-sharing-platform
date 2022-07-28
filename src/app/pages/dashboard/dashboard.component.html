@@ -1,4 +1,4 @@
-<div class="container h-100">
+<div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-12 m-5 text-center">
         <h1 class="fs-1 fw-bold">Dashboard</h1>
@@ -39,7 +39,7 @@
         </div>
   
       </ng-container>
-      <mat-card *ngIf="entryList?.length === 0">
+      <mat-card class="mb-4" *ngIf="entryList?.length === 0">
         No Post found.
       </mat-card>
       <pagination-controls *ngIf="entryList?.length > 15" class="text-center m-4" (pageChange)="pageNo = $event">
